@@ -216,3 +216,8 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# project
+.price_cache/
+backtest/equity_curve.csv
+backtest/summary.txt

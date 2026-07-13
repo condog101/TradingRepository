@@ -43,6 +43,7 @@ jobs:
 
       - name: Run backtest
         run: |
+          set -o pipefail   # a crash must fail the job, not vanish into tee
           python -m backtest.backtest \
             --years "${{ inputs.years }}" \
             --sell-rank "${{ inputs.sell_rank }}" \

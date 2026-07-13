@@ -40,7 +40,10 @@ def momentum_table(
     n_rows = len(c)
     needed = cfg.lookback_12m + cfg.skip_days + 1
 
-    price = c.iloc[-1]
+    # last *known* close: a ticker that didn't trade on the final day must
+    # not poison equity/budget maths with NaN (staleness is already policed
+    # by the completeness filter)
+    price = c.ffill().iloc[-1]
 
     # returns measured up to skip_days ago
     if n_rows >= needed:

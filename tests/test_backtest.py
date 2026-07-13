@@ -68,3 +68,23 @@ def test_cash_never_negative():
     markets, closes, traded = synthetic_market(seed=11)
     curve, state, total_costs, n_trades = run_backtest(CFG, markets, closes, traded)
     assert state.cash_gbp >= 0
+
+
+def test_data_gaps_do_not_crash_the_engine():
+    """Regression: a held/candidate ticker with NaN closes on signal days
+    once turned equity -> budget -> shares into NaN and crashed size_buy."""
+    import numpy as np
+
+    markets, closes, traded = synthetic_market(seed=3)
+    rng = np.random.default_rng(0)
+    # punch holes: random missing days per ticker, incl. some final rows
+    for col in closes.columns[::3]:
+        holes = rng.choice(len(closes), size=8, replace=False)
+        closes.iloc[holes, closes.columns.get_loc(col)] = np.nan
+    closes.iloc[-1, closes.columns.get_loc(closes.columns[0])] = np.nan
+    traded = closes * 1e6
+
+    curve, state, total_costs, n_trades = run_backtest(CFG, markets, closes, traded)
+    assert len(curve) > 100
+    assert state.cash_gbp >= 0
+    assert curve["equity"].notna().all()

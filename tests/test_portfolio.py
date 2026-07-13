@@ -98,6 +98,12 @@ def test_size_buy_too_expensive_returns_none():
     assert size_buy("BRK-A", "US", 500_000.0, 1000.0, CFG) is None
 
 
+def test_size_buy_rejects_nan_price_and_budget():
+    nan = float("nan")
+    assert size_buy("X.L", "UK", nan, 1000.0, CFG) is None
+    assert size_buy("X.L", "UK", 10.0, nan, CFG) is None
+
+
 def test_apply_trades_sell_before_buy():
     state = PortfolioState(
         cash_gbp=50.0,

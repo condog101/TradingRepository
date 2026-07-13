@@ -150,7 +150,8 @@ def size_buy(
 ) -> Trade | None:
     """Whole-share BUY sized so value + costs fit within budget.
     Returns None if even one share doesn't fit."""
-    if price_gbp <= 0 or budget_gbp <= 0:
+    # positive-form check so NaN (all comparisons False) is rejected too
+    if not (price_gbp > 0) or not (budget_gbp > 0):
         return None
     shares = int(budget_gbp / price_gbp)
     while shares > 0:

@@ -185,6 +185,32 @@ def summarize(curve: pd.DataFrame, state: PortfolioState, total_costs: float,
     return "\n".join(lines)
 
 
+def run_sweep(cfg: Config, markets, closes_gbp, traded_value) -> None:
+    """Grid over the swap-gate knobs (the observed turnover drivers) and
+    print a compact comparison table."""
+    import dataclasses as dc
+
+    print(f"{'swap_factor':>11} {'swap_rank':>9} {'min_hold':>8} | "
+          f"{'CAGR':>7} {'maxDD':>7} {'Sharpe':>6} {'tr/mo':>5} {'cost%/yr':>8} {'final £':>8}")
+    for factor in (2.0, 3.0, 4.0):
+        for out_rank in (8, 20, 40):
+            for min_hold in (28, 56):
+                c = dc.replace(cfg, swap_safety_factor=factor,
+                               swap_out_rank=out_rank, min_holding_days=min_hold)
+                curve, state, total_costs, n_trades = run_backtest(
+                    c, markets, closes_gbp, traded_value)
+                eq = curve["equity"]
+                years = (eq.index[-1] - eq.index[0]).days / 365.25
+                cagr = (eq.iloc[-1] / eq.iloc[0]) ** (1 / years) - 1
+                daily = eq.pct_change().dropna()
+                sharpe = daily.mean() / daily.std() * np.sqrt(252) if daily.std() > 0 else 0
+                dd = (eq / eq.cummax() - 1).min()
+                print(f"{factor:>11.1f} {out_rank:>9d} {min_hold:>8d} | "
+                      f"{cagr:>+6.1%} {dd:>7.1%} {sharpe:>6.2f} "
+                      f"{n_trades / (years * 12):>5.1f} "
+                      f"{total_costs / eq.iloc[0] / years:>8.2%} {eq.iloc[-1]:>8,.0f}")
+
+
 def main() -> None:
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
     ap = argparse.ArgumentParser(description=__doc__)
@@ -193,6 +219,10 @@ def main() -> None:
     ap.add_argument("--buy-rank", type=int, dest="buy_rank")
     ap.add_argument("--sell-rank", type=int, dest="sell_rank")
     ap.add_argument("--min-hold", type=int, dest="min_holding_days")
+    ap.add_argument("--swap-factor", type=float, dest="swap_safety_factor")
+    ap.add_argument("--swap-out-rank", type=int, dest="swap_out_rank")
+    ap.add_argument("--sweep", action="store_true",
+                    help="run the swap-gate parameter grid and print a table")
     ap.add_argument("--refresh", action="store_true", help="refetch prices")
     ap.add_argument("--verbose", action="store_true", help="log every trade")
     ap.add_argument("--out", default="backtest/equity_curve.csv")
@@ -206,6 +236,10 @@ def main() -> None:
 
     markets, closes_gbp, traded_value = load_history(cfg, args.years, args.refresh)
     log.info("universe: %d tickers, %d trading days", len(markets), len(closes_gbp))
+
+    if args.sweep:
+        run_sweep(cfg, markets, closes_gbp, traded_value)
+        return
 
     curve, state, total_costs, n_trades = run_backtest(
         cfg, markets, closes_gbp, traded_value, verbose=args.verbose

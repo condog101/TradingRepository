@@ -51,7 +51,9 @@ class Config:
 
     # --- Cost gating ---
     expected_hold_years: float = 0.25   # amortise round trip over ~3 months
-    swap_safety_factor: float = 2.0     # swap must clear 2x its total cost
+    swap_safety_factor: float = 2.0     # swap must clear Nx its total cost
+    swap_out_rank: int = 8              # holding only swappable once its rank
+                                        # decays past this (>= buy_rank)
 
     # --- Cadence ---
     rotation_weekday: int = 0       # 0 = Monday: buys/swaps only on this day

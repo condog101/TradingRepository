@@ -121,6 +121,24 @@ def test_unaffordable_share_skipped_for_next_candidate():
     assert [t.ticker for t in trades] == ["BBB.L"]
 
 
+def test_swap_out_rank_raises_the_swap_floor():
+    import dataclasses
+    # worst holding at rank 15: swappable with the default floor (8), but
+    # protected once swap_out_rank is raised above it
+    positions = [held(f"H{i}.L", entry=OLD) for i in range(5)]
+    rows = {f"H{i}.L": row(price=10.5, rank=11 + i, mom=0.10) for i in range(5)}
+    rows["NEW.L"] = row(rank=1, eligible=True, mom=0.90)
+    table = make_table(rows)
+    state = PortfolioState(cash_gbp=50.0, positions=positions)
+
+    loose = dataclasses.replace(CFG, swap_out_rank=8)
+    strict = dataclasses.replace(CFG, swap_out_rank=20)
+    assert len(propose_trades(table, state, loose, TODAY, rotation_day=True)) == 2
+    state2 = PortfolioState(cash_gbp=50.0,
+                            positions=[held(f"H{i}.L", entry=OLD) for i in range(5)])
+    assert propose_trades(table, state2, strict, TODAY, rotation_day=True) == []
+
+
 def test_swap_never_evicts_a_holding_still_in_buy_zone():
     positions = [held(f"H{i}.L", entry=OLD) for i in range(5)]
     # all holdings still rank inside the top buy_rank; candidate is stellar

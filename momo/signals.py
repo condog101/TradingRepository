@@ -105,9 +105,10 @@ def propose_trades(
             worst_row = table.loc[worst.ticker]
             best = cands.iloc[0]
             edge = float(best["mom_ann"]) - float(worst_row["mom_ann"])
-            # a holding still inside the buy zone is never swap fodder —
+            # a holding that still ranks well is never swap fodder —
             # swapping rank-7 for rank-1 is churn, not signal
-            if worst_row["rank"] > cfg.buy_rank and costs.swap_clears_gate(
+            swap_floor = max(cfg.swap_out_rank, cfg.buy_rank)
+            if worst_row["rank"] > swap_floor and costs.swap_clears_gate(
                     edge, str(best["market"]), worst.market, pos_value, cfg):
                 exit_position(worst, f"swapped out: rank {int(worst_row['rank'])}, "
                                      f"edge {edge:.0%}/yr clears cost gate")

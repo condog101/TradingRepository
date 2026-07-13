@@ -14,6 +14,10 @@ on:
       top_n:
         description: "Number of positions"
         default: "5"
+      sweep:
+        description: "Run the swap-gate parameter grid instead of a single test"
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -48,6 +52,7 @@ jobs:
             --years "${{ inputs.years }}" \
             --sell-rank "${{ inputs.sell_rank }}" \
             --top-n "${{ inputs.top_n }}" \
+            ${{ inputs.sweep && '--sweep' || '' }} \
             --out backtest/equity_curve.csv | tee backtest/summary.txt
 
       - name: Upload results

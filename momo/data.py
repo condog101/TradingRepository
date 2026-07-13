@@ -182,12 +182,14 @@ def to_gbp(
         cur = currencies.get(t)
         if cur is None:
             cur = "USD" if markets.get(t) == "US" else "GBp"
-        cur_lower = cur.lower()
-        if cur_lower == "gbp":
-            pass
-        elif cur_lower == "gbx" or cur == "GBp":
+        # NB: pence must be checked case-sensitively BEFORE pounds —
+        # "GBp".lower() == "GBP".lower(), and that collision once shipped
+        # prices 100x too high. Yahoo uses exactly "GBp" for pence.
+        if cur == "GBp" or cur.upper() == "GBX":
             out[t] = out[t] * 0.01
-        elif cur_lower == "usd":
+        elif cur == "GBP":
+            pass
+        elif cur.upper() == "USD":
             out[t] = out[t] / usd_divisor
         else:
             log.warning("unhandled currency %s for %s; leaving unconverted", cur, t)

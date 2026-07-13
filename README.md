@@ -81,6 +81,15 @@ One-time setup:
 2. Run the *daily-signals* workflow once (not dry-run) — the workflow
    enables Pages itself on first deploy.
 
+## Bot commands
+
+Send **/latest** (or `/status`) to the bot at any time to get the most
+recent daily update resent. There is no always-on server — a scheduled
+workflow (`bot.yml`) polls for commands every ~10 minutes, so expect the
+reply within 10–15 minutes, not instantly. Only your own chat gets
+replies. Disable the *bot-commands* workflow from the Actions tab if you
+don't use this.
+
 ## Daily routine
 
 - **Message says "TRADES TO MAKE"** → place those orders on Interactive

@@ -10,10 +10,12 @@ messages fall back to stdout so local dry runs need no setup.
 from __future__ import annotations
 
 import html
+import json
 import logging
 import os
 import time
 from datetime import date
+from pathlib import Path
 
 import pandas as pd
 import requests
@@ -24,6 +26,25 @@ log = logging.getLogger(__name__)
 
 API = "https://api.telegram.org/bot{token}/sendMessage"
 UPDATES_API = "https://api.telegram.org/bot{token}/getUpdates"
+
+# Discovered chat id is persisted so it survives the command poller acking
+# getUpdates (which empties the update history discovery relies on).
+CHAT_ID_FILE = Path("state/telegram_chat.json")
+
+
+def load_saved_chat_id() -> str | None:
+    try:
+        return str(json.loads(CHAT_ID_FILE.read_text())["chat_id"])
+    except Exception:
+        return None
+
+
+def save_chat_id(chat_id: str) -> None:
+    try:
+        CHAT_ID_FILE.parent.mkdir(parents=True, exist_ok=True)
+        CHAT_ID_FILE.write_text(json.dumps({"chat_id": str(chat_id)}))
+    except OSError:
+        log.warning("could not persist chat id", exc_info=True)
 
 
 def discover_chat_id(token: str) -> str | None:
@@ -43,11 +64,21 @@ def discover_chat_id(token: str) -> str | None:
     return None
 
 
+def resolve_chat_id(token: str) -> str | None:
+    """Env var > persisted file > getUpdates discovery (persisted on success)."""
+    chat_id = os.environ.get("TELEGRAM_CHAT_ID") or load_saved_chat_id()
+    if not chat_id:
+        chat_id = discover_chat_id(token)
+        if chat_id:
+            save_chat_id(chat_id)
+    return chat_id
+
+
 def send(text: str) -> bool:
     """Send `text` (HTML) to Telegram; returns True on success.
     Falls back to stdout when credentials are absent."""
     token = os.environ.get("TELEGRAM_BOT_TOKEN")
-    chat_id = os.environ.get("TELEGRAM_CHAT_ID") or (token and discover_chat_id(token))
+    chat_id = resolve_chat_id(token) if token else None
     if not token or not chat_id:
         if token and not chat_id:
             log.warning("no TELEGRAM_CHAT_ID and discovery found no messages — "
@@ -92,7 +123,7 @@ def _portfolio_lines(state: PortfolioState, prices: pd.Series,
         rank = table.loc[p.ticker, "rank"] if p.ticker in table.index else float("nan")
         rank_s = f"#{int(rank)}" if pd.notna(rank) else "–"
         lines.append(
-            f"  {html.escape(p.ticker)} ({p.market})  {_money(value)}  "
+            f"  {html.escape(p.ticker)} ({p.market})  {p.shares} sh  {_money(value)}  "
             f"{pnl_pct:+.1%}  {p.days_held(today)}d  rank {rank_s}"
         )
     if not state.positions:

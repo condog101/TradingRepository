@@ -354,6 +354,7 @@ function renderHoldings(d) {
     const meta = el("div", "meta");
     const mk = (k, v) => { const s = el("span", "", k + " "); s.append(el("b", "", v)); return s; };
     meta.append(
+      mk("shares", String(p.shares)),
       mk("rank", p.rank == null ? "–" : "#" + p.rank),
       mk("held", p.days_held + "d"),
       mk("entry", GBP(p.entry_price) + " · " + p.entry_date),

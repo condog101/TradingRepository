@@ -1,8 +1,15 @@
 """Telegram delivery tests — all network mocked."""
 
+import pytest
 import requests
 
 from momo import notify
+
+
+@pytest.fixture(autouse=True)
+def isolated_chat_id_file(monkeypatch, tmp_path):
+    """Never let chat-id persistence touch the real state/ directory."""
+    monkeypatch.setattr(notify, "CHAT_ID_FILE", tmp_path / "telegram_chat.json")
 
 
 class FakeResp:

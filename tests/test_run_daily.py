@@ -32,6 +32,7 @@ def wired(tmp_path, monkeypatch):
         universe_file=str(tmp_path / "universe.json"),
         state_dir=str(tmp_path),
         history_file=str(tmp_path / "history.csv"),
+        last_message_file=str(tmp_path / "last_message.txt"),
         site_data_file=str(tmp_path / "site" / "data.json"),
     )
     monkeypatch.setattr(run_daily, "load_config", lambda: cfg)

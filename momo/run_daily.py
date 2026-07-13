@@ -103,6 +103,11 @@ def main() -> int:
         if dry:
             msg = "🧪 [DRY RUN]\n" + msg
         notify.send(msg)
+        if not dry:
+            # stored so the /latest bot command can resend it on demand
+            p = Path(cfg.last_message_file)
+            p.parent.mkdir(parents=True, exist_ok=True)
+            p.write_text(msg)
 
         # Dashboard data last: the Telegram signal above is already out, so
         # a failure here alerts + reddens the run without losing the signal.

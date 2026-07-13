@@ -69,6 +69,7 @@ class Config:
     portfolio_file: str = field(default="state/portfolio.json")
     universe_file: str = field(default="state/universe.json")
     history_file: str = field(default="state/history.csv")
+    last_message_file: str = field(default="state/last_message.txt")
     site_data_file: str = field(default="site/data.json")
     cache_dir: str = ".price_cache"
 

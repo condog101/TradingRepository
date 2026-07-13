@@ -1,0 +1,51 @@
+# Telegram command poller: answers /latest by resending the stored daily
+# message. Serverless design — polls every ~10 minutes, so replies take up
+# to ~10-15 min. Free on a public repo. Disable this workflow if you don't
+# use the command.
+name: bot-commands
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write   # persists a newly discovered chat id into state/
+
+concurrency:
+  group: bot-commands
+  cancel-in-progress: false
+
+jobs:
+  poll:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Answer pending commands
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python -m momo.bot_commands
+
+      - name: Persist discovered chat id
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add state/
+          if git diff --cached --quiet; then
+            echo "no state changes"
+          else
+            git commit -m "state: persist telegram chat id [skip ci]"
+            git pull --rebase origin "${{ github.ref_name }}"
+            git push origin "HEAD:${{ github.ref_name }}"
+          fi

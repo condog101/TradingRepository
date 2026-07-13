@@ -10,7 +10,7 @@ on:
         default: "5"
       sell_rank:
         description: "Sell-rank hysteresis threshold"
-        default: "80"
+        default: "40"
       top_n:
         description: "Number of positions"
         default: "5"

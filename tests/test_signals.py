@@ -75,8 +75,8 @@ def test_rank_exit_only_on_rotation_day_after_min_hold():
 
 
 def test_hysteresis_holds_between_buy_and_sell_rank():
-    # rank 50 is outside the buy zone (15) but inside the hold zone (80)
-    table = make_table({"AAA.L": row(price=10.5, rank=50)})
+    # rank 20 is outside the buy zone (8) but inside the hold zone (40)
+    table = make_table({"AAA.L": row(price=10.5, rank=20)})
     state = PortfolioState(cash_gbp=100.0, positions=[held("AAA.L")])
     assert propose_trades(table, state, CFG, TODAY, rotation_day=True) == []
 

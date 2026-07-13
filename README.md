@@ -2,9 +2,17 @@
 
 A free, self-hosted (GitHub Actions) signal system for a £5,000 trading
 challenge executed **manually on Interactive Investor**. Every weekday after
-US close it scores ~850 FTSE 100/250 + S&P 500 shares by cost-adjusted
-momentum, checks the current portfolio, and sends one Telegram message:
-either the trades to make, or a "no trades today" heartbeat with P&L.
+LSE close it scores ~350 FTSE 100/250 shares by cost-adjusted momentum,
+checks the current portfolio, and sends one Telegram message: either the
+trades to make, or a "no trades today" heartbeat with P&L.
+
+**Why UK-only?** The account is a Stocks & Shares ISA, and HMRC rules mean
+an ISA can only hold sterling cash — so every US trade would pay II's
+0.75% FX fee both ways (~2.6% round trip vs ~1.6% for UK shares). In a
+Trading Account or SIPP you could hold USD and cut US round trips to
+~1.1%; if the money ever moves, re-add the S&P 500 to
+`momo/universe.py` — the cost model and signal engine are already
+multi-market.
 
 > **This is not financial advice.** It is a rules engine you configured
 > yourself. Momentum strategies have long flat/losing stretches, the
@@ -15,20 +23,18 @@ either the trades to make, or a "no trades today" heartbeat with P&L.
 
 - **Score** = blended 6m/12m return (skipping the most recent month),
   divided by realised volatility, **minus** an amortised estimate of what a
-  round trip in that name costs at Interactive Investor. US names carry
-  ~2.6% round-trip cost (commission + 0.75% FX each way) vs ~1.6% for UK
-  (commission + 0.5% stamp duty), so a US share must be meaningfully
-  stronger to get picked.
+  round trip in that name costs at Interactive Investor (~1.6–2% at £1,000:
+  commission, 0.5% stamp duty on buys, spread).
 - **Hold the top 5** (~£1,000 each). A name is bought only when it ranks in
-  the **top 15** of the universe, but is held until it decays past **rank
-  80** — this wide hysteresis band is what keeps turnover (and fees) low.
+  the **top 8** of the ~350-name universe, but is held until it decays past
+  **rank 40** — this wide hysteresis band is what keeps turnover (and fees)
+  low.
 - **Buys/swaps only on Mondays**; a swap must clear a cost gate (expected
   edge over the expected ~3-month hold must exceed 2x the total switching
-  cost) and never evicts a holding still in the top 15.
+  cost) and never evicts a holding still in the top 8.
 - **Exits fire any weekday**: close below 98% of the 200-day average, or a
   hard stop 20% below entry. Empty slots stay in cash, so the portfolio
   de-risks itself in broad downtrends.
-- Max 3 of 5 positions US-listed (FX-fee and GBPUSD exposure cap).
 - Expected turnover: **1–2 trades per month**.
 
 ## Setup (one-off, ~10 minutes)
@@ -44,7 +50,8 @@ either the trades to make, or a "no trades today" heartbeat with P&L.
 5. **Test it**: Actions → *daily-signals* → Run workflow → tick *dry run*.
    You should get a Telegram message within a few minutes.
 
-The schedule (21:45 UTC weekdays) then runs itself. GitHub disables cron
+The schedule (17:45 UTC weekdays, after the 16:30 LSE close) then runs
+itself. GitHub disables cron
 on repos with 60 days of no activity — the daily state commit keeps it
 alive, but if you ever pause, re-enable from the Actions tab.
 
@@ -86,14 +93,15 @@ Run the unit tests any time with `python -m pytest tests/ -q`.
 
 ## Costs modelled (Interactive Investor, Core plan, Feb 2026 pricing)
 
-| Component | UK | US |
-|---|---|---|
-| Commission | £3.99/trade | £3.99/trade |
-| Stamp duty (buys) | 0.5% | — |
-| FX fee (each way) | — | 0.75% |
-| Spread/slippage assumption | 0.15% | 0.15% |
-| **Round trip on £1,000** | **~1.6%** | **~2.6%** |
+| Component | UK shares |
+|---|---|
+| Commission | £3.99/trade |
+| Stamp duty (buys) | 0.5% |
+| Spread/slippage assumption | 0.25% (FTSE 250-honest; FTSE 100 is tighter) |
+| **Round trip on £1,000** | **~1.8%** |
 
+For reference: US shares in this ISA would cost ~2.6% per round trip
+(0.75% FX each way on top of commission), which is why they're excluded.
 The £5.99/month platform fee (~1.4%/yr on £5k) is real but independent of
 trading, so it is excluded from trade gating. If you change plan or II
 changes pricing, update `momo/config.py`.
@@ -102,8 +110,8 @@ changes pricing, update `momo/config.py`.
 
 ```
 momo/config.py     every tunable parameter (strategy, costs, schedule)
-momo/universe.py   S&P 500 + FTSE 100/250 constituents from Wikipedia (cached)
-momo/data.py       yfinance batched downloads, Stooq fallback, GBp/USD -> GBP
+momo/universe.py   FTSE 100/250 constituents from Wikipedia (cached)
+momo/data.py       yfinance batched downloads, Stooq fallback, GBp -> GBP
 momo/momentum.py   scoring, filters, ranking            (pure)
 momo/costs.py      II cost model + swap cost gate       (pure)
 momo/signals.py    hysteresis rotation engine           (pure)

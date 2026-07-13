@@ -1,4 +1,4 @@
-# Daily signal run: compute momentum signals after US close, ping Telegram,
+# Daily signal run: compute momentum signals after LSE close, ping Telegram,
 # commit updated state back to the repo.
 #
 # Loop safety: there is deliberately NO `push` trigger, and the state commit
@@ -7,7 +7,7 @@ name: daily-signals
 
 on:
   schedule:
-    - cron: "45 21 * * 1-5"   # 21:45 UTC, Mon-Fri (after US close year-round)
+    - cron: "45 17 * * 1-5"   # 17:45 UTC, Mon-Fri (LSE closes 16:30 London)
   workflow_dispatch:
     inputs:
       dry_run:

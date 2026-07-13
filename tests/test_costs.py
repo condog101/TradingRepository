@@ -5,7 +5,16 @@ import pytest
 from momo.config import Config
 from momo import costs
 
-CFG = Config()
+# Cost parameters pinned explicitly: these tests verify the formulas
+# against hand-computed numbers, independent of strategy-default tuning.
+CFG = Config(
+    commission_gbp=3.99,
+    uk_stamp_duty=0.005,
+    us_fx_fee=0.0075,
+    spread_pct=0.0015,
+    expected_hold_years=0.25,
+    swap_safety_factor=2.0,
+)
 
 
 def test_uk_buy_cost_hand_computed():

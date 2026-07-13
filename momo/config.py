@@ -16,8 +16,8 @@ class Config:
     # --- Portfolio shape ---
     starting_cash_gbp: float = 5_000.0
     n_positions: int = 5
-    cash_buffer_pct: float = 0.025  # kept aside for commissions/stamp/FX
-    max_us_positions: int = 3       # caps FX-fee exposure and GBPUSD risk
+    cash_buffer_pct: float = 0.025  # kept aside for commissions/stamp
+    max_us_positions: int = 3       # inert while the universe is UK-only
 
     # --- Momentum score ---
     skip_days: int = 21             # skip most recent month (1-month reversal)
@@ -26,9 +26,9 @@ class Config:
     vol_window: int = 126           # daily-return vol window for adjustment
     history_days: int = 273         # 12m lookback + skip: minimum usable history
 
-    # --- Rotation thresholds (hysteresis) ---
-    buy_rank: int = 15              # enter only if ranked in the top 15
-    sell_rank: int = 80             # exit only once rank decays past 80
+    # --- Rotation thresholds (hysteresis, sized for ~350-name UK universe) ---
+    buy_rank: int = 8               # enter only if ranked in the top 8 (~2%)
+    sell_rank: int = 40             # exit only once rank decays past 40 (~11%)
     min_holding_days: int = 28      # calendar days before a rank-based exit
 
     # --- Trend / risk filters ---
@@ -38,7 +38,7 @@ class Config:
     min_6m_return: float = 0.0      # absolute momentum: 6m return must be > 0
 
     # --- Liquidity / data-quality filters ---
-    min_median_daily_value_gbp: float = 5_000_000.0
+    min_median_daily_value_gbp: float = 3_000_000.0  # keeps a workable FTSE 250 slice
     volume_median_window: int = 20
     min_completeness: float = 0.95  # fraction of non-NaN closes over history
     min_price_gbp: float = 0.50
@@ -46,8 +46,8 @@ class Config:
     # --- Interactive Investor cost model (Core plan, post Feb-2026) ---
     commission_gbp: float = 3.99
     uk_stamp_duty: float = 0.005    # SDRT on UK buys only
-    us_fx_fee: float = 0.0075       # each way (0.75% Core plan)
-    spread_pct: float = 0.0015      # half-spread + slippage assumption
+    us_fx_fee: float = 0.0075       # each way; inert while universe is UK-only
+    spread_pct: float = 0.0025      # half-spread + slippage; FTSE 250-honest
 
     # --- Cost gating ---
     expected_hold_years: float = 0.25   # amortise round trip over ~3 months

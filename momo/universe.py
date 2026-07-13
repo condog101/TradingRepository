@@ -1,4 +1,9 @@
-"""Universe construction: S&P 500 + FTSE 100 + FTSE 250 from Wikipedia.
+"""Universe construction: FTSE 100 + FTSE 250 from Wikipedia.
+
+UK-only by design: the account is a Stocks & Shares ISA, which can only
+hold GBP cash, so every US trade would pay II's 0.75% FX fee both ways.
+(To re-enable US names — e.g. in a GIA with a USD balance — add the S&P
+500 Wikipedia page back here; costs/signals remain multi-market capable.)
 
 Constituent churn is slow, so the scraped list is cached in
 state/universe.json and only refreshed every ~4 weeks. On scrape failure
@@ -24,7 +29,6 @@ from .config import Config
 log = logging.getLogger(__name__)
 
 WIKI_PAGES = {
-    "US": "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies",
     "UK100": "https://en.wikipedia.org/wiki/FTSE_100_Index",
     "UK250": "https://en.wikipedia.org/wiki/FTSE_250_Index",
 }

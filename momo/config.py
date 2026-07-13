@@ -68,7 +68,13 @@ class Config:
     state_dir: str = "state"
     portfolio_file: str = field(default="state/portfolio.json")
     universe_file: str = field(default="state/universe.json")
+    history_file: str = field(default="state/history.csv")
+    site_data_file: str = field(default="site/data.json")
     cache_dir: str = ".price_cache"
+
+    # --- Dashboard ---
+    benchmark_ticker: str = "^FTSE"
+    leaderboard_size: int = 15
 
 
 def load_config() -> Config:

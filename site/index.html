@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>£5K Momentum Challenge</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📈</text></svg>">
+<style>
+  :root {
+    --surface-1: #fcfcfb;
+    --page: #f9f9f7;
+    --text-primary: #0b0b0b;
+    --text-secondary: #52514e;
+    --muted: #898781;
+    --grid: #e1e0d9;
+    --baseline: #c3c2b7;
+    --border: rgba(11,11,11,0.10);
+    --series-1: #2a78d6;   /* portfolio / price */
+    --series-2: #1baf7a;   /* benchmark */
+    --good: #006300;
+    --critical: #d03b3b;
+    --wash: rgba(42,120,214,0.08);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --surface-1: #1a1a19;
+      --page: #0d0d0d;
+      --text-primary: #ffffff;
+      --text-secondary: #c3c2b7;
+      --muted: #898781;
+      --grid: #2c2c2a;
+      --baseline: #383835;
+      --border: rgba(255,255,255,0.10);
+      --series-1: #3987e5;
+      --series-2: #199e70;
+      --good: #0ca30c;
+      --critical: #d03b3b;
+      --wash: rgba(57,135,229,0.12);
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--page); color: var(--text-primary);
+    font: 14px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  .wrap { max-width: 1060px; margin: 0 auto; padding: 24px 16px 48px; }
+  header h1 { font-size: 20px; font-weight: 650; margin: 0; }
+  header .sub { color: var(--text-secondary); margin: 4px 0 0; font-size: 13px; }
+  h2 { font-size: 15px; font-weight: 650; margin: 32px 0 12px; }
+  .card {
+    background: var(--surface-1); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px;
+  }
+  /* stat tiles */
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-top: 16px; }
+  .tile .label { font-size: 12px; color: var(--text-secondary); }
+  .tile .value { font-size: 26px; font-weight: 600; margin-top: 2px; }
+  .tile .delta { font-size: 12px; margin-top: 2px; color: var(--text-secondary); }
+  .up   { color: var(--good); }
+  .down { color: var(--critical); }
+  /* charts */
+  .chart { position: relative; }
+  .chart svg { display: block; width: 100%; }
+  .legend { display: flex; gap: 16px; font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; flex-wrap: wrap; }
+  .legend .key { display: inline-block; width: 14px; height: 0; border-top: 2px solid; vertical-align: middle; margin-right: 5px; border-radius: 1px; }
+  .tooltip {
+    position: absolute; pointer-events: none; display: none; z-index: 5;
+    background: var(--surface-1); border: 1px solid var(--border); border-radius: 8px;
+    padding: 8px 10px; font-size: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+    min-width: 120px;
+  }
+  .tooltip .tdate { color: var(--text-secondary); margin-bottom: 4px; }
+  .tooltip .trow { display: flex; align-items: center; gap: 6px; }
+  .tooltip .tkey { width: 10px; border-top: 2px solid; border-radius: 1px; }
+  .tooltip .tval { font-weight: 600; margin-left: auto; padding-left: 10px; }
+  /* holdings grid */
+  .holdings { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
+  .holding .head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+  .holding .tkr { font-weight: 650; }
+  .holding .nm { color: var(--text-secondary); font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .holding .meta { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12px; color: var(--text-secondary); margin-top: 8px; }
+  .holding .meta b { color: var(--text-primary); font-weight: 600; }
+  /* tables */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; font-weight: 600; color: var(--text-secondary); font-size: 12px;
+       padding: 6px 10px; border-bottom: 1px solid var(--baseline); }
+  td { padding: 7px 10px; border-bottom: 1px solid var(--grid); font-variant-numeric: tabular-nums; }
+  tr:last-child td { border-bottom: none; }
+  td.num, th.num { text-align: right; }
+  tr.held { background: var(--wash); }
+  .chip { display: inline-block; font-size: 11px; font-weight: 600; padding: 1px 7px; border-radius: 999px;
+          border: 1px solid var(--border); color: var(--text-secondary); }
+  .chip.held { color: var(--series-1); border-color: var(--series-1); }
+  .note { color: var(--text-secondary); font-size: 13px; }
+  .scroll { overflow-x: auto; }
+  footer { margin-top: 40px; color: var(--muted); font-size: 12px; }
+  .err { color: var(--critical); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>£5K Momentum Challenge</h1>
+    <p class="sub" id="asof">Loading…</p>
+  </header>
+
+  <div class="tiles" id="tiles"></div>
+
+  <h2>Equity vs FTSE 100 <span class="note" style="font-weight:400">(rebased to 100 at first snapshot)</span></h2>
+  <div class="card"><div id="equityChart"></div></div>
+
+  <h2>Positions</h2>
+  <div class="holdings" id="holdings"></div>
+
+  <h2>Momentum leaderboard</h2>
+  <div class="card scroll"><table id="leaderboard"></table></div>
+
+  <h2>Trade log</h2>
+  <div class="card scroll"><table id="trades"></table></div>
+
+  <footer>
+    Signals generated automatically; trades executed manually on Interactive Investor.
+    Not financial advice. <span id="gen"></span>
+  </footer>
+</div>
+
+<script>
+"use strict";
+const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+const GBP = v => "£" + Number(v).toLocaleString("en-GB", {minimumFractionDigits: 2, maximumFractionDigits: 2});
+const GBP0 = v => "£" + Math.round(Number(v)).toLocaleString("en-GB");
+const PCT = (v, dp=1) => (v > 0 ? "+" : "") + (100 * v).toFixed(dp) + "%";
+const el = (tag, cls, text) => {
+  const n = document.createElement(tag);
+  if (cls) n.className = cls;
+  if (text !== undefined) n.textContent = text;
+  return n;
+};
+
+/* ---------- generic SVG line chart with crosshair tooltip ---------- */
+/* series: [{name, color, points: [[isoDate, value], …]}]
+   opts: {height, yFmt, refLines: [{y, color, label}], markers: [{date, value, color}]} */
+function lineChart(container, series, opts = {}) {
+  container.textContent = "";
+  const H = opts.height || 260;
+  const W = container.clientWidth || 600;
+  const pad = {l: 46, r: 12, t: 10, b: 22};
+
+  const allDates = [...new Set(series.flatMap(s => s.points.map(p => p[0])))].sort();
+  if (!allDates.length) { container.append(el("p", "note", "No data yet.")); return; }
+  const allVals = series.flatMap(s => s.points.map(p => p[1]))
+    .concat((opts.refLines || []).map(r => r.y)).filter(v => v != null);
+  let lo = Math.min(...allVals), hi = Math.max(...allVals);
+  if (lo === hi) { lo -= 1; hi += 1; }
+  const span = hi - lo; lo -= span * 0.06; hi += span * 0.06;
+
+  const t0 = Date.parse(allDates[0]), t1 = Date.parse(allDates[allDates.length - 1]);
+  const x = d => pad.l + (t1 === t0 ? 0.5 : (Date.parse(d) - t0) / (t1 - t0)) * (W - pad.l - pad.r);
+  const y = v => pad.t + (1 - (v - lo) / (hi - lo)) * (H - pad.t - pad.b);
+
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  const add = (parent, tag, attrs) => {
+    const n = document.createElementNS("http://www.w3.org/2000/svg", tag);
+    for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, v);
+    parent.append(n); return n;
+  };
+
+  // gridlines + y ticks (clean numbers)
+  const step = niceStep((hi - lo) / 4);
+  for (let v = Math.ceil(lo / step) * step; v <= hi; v += step) {
+    add(svg, "line", {x1: pad.l, x2: W - pad.r, y1: y(v), y2: y(v),
+                      stroke: css("--grid"), "stroke-width": 1});
+    const t = add(svg, "text", {x: pad.l - 6, y: y(v) + 4, "text-anchor": "end",
+                                fill: css("--muted"), "font-size": 11});
+    t.textContent = (opts.yFmt || (n => n.toLocaleString("en-GB")))(v);
+  }
+  // x labels (~5); ends anchored inward so nothing clips at the edges
+  const nX = Math.min(5, allDates.length);
+  for (let i = 0; i < nX; i++) {
+    const d = allDates[Math.round(i * (allDates.length - 1) / Math.max(nX - 1, 1))];
+    const anchor = i === 0 ? "start" : i === nX - 1 ? "end" : "middle";
+    const t = add(svg, "text", {x: x(d), y: H - 6, "text-anchor": anchor,
+                                fill: css("--muted"), "font-size": 11});
+    t.textContent = new Date(d).toLocaleDateString("en-GB", {month: "short", day: "numeric"});
+  }
+  // reference lines (e.g. stop level)
+  for (const r of opts.refLines || []) {
+    if (r.y < lo || r.y > hi) continue;
+    add(svg, "line", {x1: pad.l, x2: W - pad.r, y1: y(r.y), y2: y(r.y),
+                      stroke: r.color, "stroke-width": 1, opacity: 0.85});
+    if (r.label) {
+      const t = add(svg, "text", {x: W - pad.r, y: y(r.y) - 4, "text-anchor": "end",
+                                  fill: r.color, "font-size": 10});
+      t.textContent = r.label;
+    }
+  }
+  // series lines
+  for (const s of series) {
+    const pts = s.points.filter(p => p[1] != null);
+    if (!pts.length) continue;
+    add(svg, "path", {
+      d: pts.map((p, i) => (i ? "L" : "M") + x(p[0]).toFixed(1) + " " + y(p[1]).toFixed(1)).join(" "),
+      fill: "none", stroke: s.color, "stroke-width": 2,
+      "stroke-linejoin": "round", "stroke-linecap": "round",
+      opacity: s.muted ? 0.75 : 1,
+    });
+  }
+  // entry markers: ≥8px dot with 2px surface ring
+  for (const m of opts.markers || []) {
+    add(svg, "circle", {cx: x(m.date), cy: y(m.value), r: 6, fill: css("--surface-1")});
+    add(svg, "circle", {cx: x(m.date), cy: y(m.value), r: 4, fill: m.color});
+  }
+
+  // crosshair + tooltip
+  const cross = add(svg, "line", {y1: pad.t, y2: H - pad.b, stroke: css("--baseline"),
+                                  "stroke-width": 1, visibility: "hidden"});
+  const tip = el("div", "tooltip");
+  const wrap = el("div", "chart");
+  wrap.append(svg, tip);
+  container.append(wrap);
+
+  const lookup = series.map(s => new Map(s.points.map(p => [p[0], p[1]])));
+  svg.addEventListener("pointermove", ev => {
+    const rect = svg.getBoundingClientRect();
+    const px = (ev.clientX - rect.left) * (W / rect.width);
+    let best = allDates[0], bd = Infinity;
+    for (const d of allDates) {
+      const dd = Math.abs(x(d) - px);
+      if (dd < bd) { bd = dd; best = d; }
+    }
+    cross.setAttribute("x1", x(best)); cross.setAttribute("x2", x(best));
+    cross.setAttribute("visibility", "visible");
+    tip.textContent = "";
+    tip.append(el("div", "tdate", new Date(best).toLocaleDateString("en-GB",
+      {day: "numeric", month: "short", year: "numeric"})));
+    series.forEach((s, i) => {
+      const v = lookup[i].get(best);
+      if (v == null) return;
+      const row = el("div", "trow");
+      const key = el("span", "tkey"); key.style.borderTopColor = s.color;
+      row.append(key, el("span", "", s.name),
+                 el("span", "tval", (opts.yFmt || (n => n.toLocaleString("en-GB",
+                   {maximumFractionDigits: 2})))(v)));
+      tip.append(row);
+    });
+    tip.style.display = "block";
+    const tw = tip.offsetWidth, cw = wrap.clientWidth;
+    const cx = x(best) * (rect.width / W);
+    tip.style.left = Math.min(Math.max(cx + 12, 0), cw - tw - 4) + "px";
+    tip.style.top = "8px";
+  });
+  svg.addEventListener("pointerleave", () => {
+    tip.style.display = "none"; cross.setAttribute("visibility", "hidden");
+  });
+}
+
+function niceStep(raw) {
+  const mag = Math.pow(10, Math.floor(Math.log10(Math.abs(raw) || 1)));
+  for (const m of [1, 2, 2.5, 5, 10]) if (raw <= m * mag) return m * mag;
+  return 10 * mag;
+}
+
+/* ---------- sections ---------- */
+function tile(label, value, delta, deltaClass) {
+  const t = el("div", "card tile");
+  t.append(el("div", "label", label), el("div", "value", value));
+  if (delta) t.append(el("div", "delta " + (deltaClass || ""), delta));
+  return t;
+}
+
+function renderTiles(d) {
+  const box = document.getElementById("tiles");
+  const s = d.stats;
+  const retCls = d.total_return_pct >= 0 ? "up" : "down";
+  box.append(
+    tile("Equity", GBP0(d.equity), PCT(d.total_return_pct) + " vs " + GBP0(d.starting_cash), retCls),
+    tile("Cash", GBP0(d.cash), d.positions.length + " of " + d.config.n_positions + " slots filled"),
+    tile("Drawdown", PCT(s.drawdown_pct), "max " + PCT(s.max_drawdown_pct), s.drawdown_pct < -0.05 ? "down" : ""),
+    tile("30-day change", s.change_30d_pct == null ? "—" : PCT(s.change_30d_pct),
+         s.change_30d_pct == null ? "needs 30 days of history" : "",
+         s.change_30d_pct > 0 ? "up" : s.change_30d_pct < 0 ? "down" : ""),
+    tile("Costs paid", GBP(s.total_costs), s.n_trades + " trades"),
+  );
+}
+
+function renderEquity(d) {
+  const box = document.getElementById("equityChart");
+  const hist = d.history.filter(h => h.equity_gbp != null);
+  if (hist.length < 2) {
+    box.append(el("p", "note",
+      "The equity curve appears after a couple of daily runs — history accumulates from deployment day."));
+    return;
+  }
+  const eq0 = hist[0].equity_gbp;
+  const series = [{
+    name: "Portfolio", color: css("--series-1"),
+    points: hist.map(h => [h.date, 100 * h.equity_gbp / eq0]),
+  }];
+  const bench = hist.filter(h => h.benchmark_close != null);
+  if (bench.length >= 2) {
+    const b0 = bench[0].benchmark_close;
+    series.push({
+      name: "FTSE 100", color: css("--series-2"),
+      points: bench.map(h => [h.date, 100 * h.benchmark_close / b0]),
+    });
+  }
+  const legend = el("div", "legend");
+  for (const s of series) {
+    const item = el("span");
+    const key = el("span", "key"); key.style.borderTopColor = s.color;
+    item.append(key, document.createTextNode(s.name));
+    legend.append(item);
+  }
+  box.append(legend);
+  const chartBox = el("div");   // lineChart clears its container — keep the legend out of it
+  box.append(chartBox);
+  lineChart(chartBox, series, {height: 280, yFmt: v => v.toFixed(0)});
+}
+
+function renderHoldings(d) {
+  const box = document.getElementById("holdings");
+  if (!d.positions.length) {
+    const c = el("div", "card note",
+      "All cash — no open positions. The system is waiting for names that clear its filters.");
+    box.append(c);
+    return;
+  }
+  for (const p of d.positions) {
+    const card = el("div", "card holding");
+    const head = el("div", "head");
+    const left = el("div");
+    const tk = el("span", "tkr", p.ticker + " ");
+    if (p.name) tk.append(el("span", "nm", p.name));
+    left.append(tk);
+    const right = el("div");
+    right.append(el("b", "", GBP0(p.value)), document.createTextNode(" "),
+      el("span", p.pnl_pct >= 0 ? "up" : "down", p.pnl_pct == null ? "" : PCT(p.pnl_pct)));
+    head.append(left, right);
+    card.append(head);
+
+    const chartBox = el("div");
+    card.append(chartBox);
+    // render after attach so clientWidth is real
+    requestAnimationFrame(() => lineChart(chartBox, [
+      {name: "Price", color: css("--series-1"), points: p.prices},
+      {name: "200dma", color: css("--muted"), points: p.sma_series, muted: true},
+    ], {
+      height: 150, yFmt: v => v >= 100 ? v.toFixed(0) : v.toFixed(2),
+      refLines: [{y: p.stop, color: css("--critical"), label: "stop"}],
+      markers: [{date: nearestDate(p.prices, p.entry_date), value: p.entry_price, color: css("--series-1")}],
+    }));
+
+    const meta = el("div", "meta");
+    const mk = (k, v) => { const s = el("span", "", k + " "); s.append(el("b", "", v)); return s; };
+    meta.append(
+      mk("rank", p.rank == null ? "–" : "#" + p.rank),
+      mk("held", p.days_held + "d"),
+      mk("entry", GBP(p.entry_price) + " · " + p.entry_date),
+      mk("to stop", p.dist_to_stop_pct == null ? "–" : PCT(p.dist_to_stop_pct)),
+      mk("vs 200dma", p.dist_to_sma_pct == null ? "–" : PCT(p.dist_to_sma_pct)),
+    );
+    card.append(meta);
+    box.append(card);
+  }
+}
+
+function nearestDate(points, iso) {
+  if (!points.length) return iso;
+  const t = Date.parse(iso);
+  let best = points[0][0], bd = Infinity;
+  for (const [d] of points) {
+    const dd = Math.abs(Date.parse(d) - t);
+    if (dd < bd) { bd = dd; best = d; }
+  }
+  return best;
+}
+
+function renderLeaderboard(d) {
+  const tbl = document.getElementById("leaderboard");
+  const head = el("tr");
+  for (const [h, cls] of [["#", "num"], ["Ticker", ""], ["Name", ""], ["Score", "num"],
+                          ["6m", "num"], ["12m", "num"], ["Trend", ""], ["", ""]]) {
+    head.append(Object.assign(el("th", cls, h)));
+  }
+  tbl.append(head);
+  for (const r of d.leaderboard) {
+    const tr = el("tr", r.held ? "held" : "");
+    tr.append(
+      el("td", "num", String(r.rank)),
+      el("td", "", r.ticker),
+      el("td", "", r.name || ""),
+      el("td", "num", r.score == null ? "–" : r.score.toFixed(2)),
+      el("td", "num " + (r.r6 >= 0 ? "up" : "down"), r.r6 == null ? "–" : PCT(r.r6, 0)),
+      el("td", "num " + (r.r12 >= 0 ? "up" : "down"), r.r12 == null ? "–" : PCT(r.r12, 0)),
+      el("td", "", r.above_sma ? "above 200dma" : "below 200dma"),
+    );
+    const last = el("td");
+    if (r.held) last.append(el("span", "chip held", "HELD"));
+    else if (r.eligible && r.rank <= d.config.buy_rank) last.append(el("span", "chip", "buy zone"));
+    tr.append(last);
+    tbl.append(tr);
+  }
+}
+
+function renderTrades(d) {
+  const tbl = document.getElementById("trades");
+  if (!d.trades.length) {
+    tbl.replaceWith(el("p", "note", "No trades yet."));
+    return;
+  }
+  const head = el("tr");
+  for (const [h, cls] of [["Date", ""], ["Side", ""], ["Ticker", ""], ["Shares", "num"],
+                          ["Price", "num"], ["Value", "num"], ["Cost", "num"], ["Reason", ""]]) {
+    head.append(el("th", cls, h));
+  }
+  tbl.append(head);
+  for (const t of d.trades) {
+    const tr = el("tr");
+    tr.append(
+      el("td", "", t.date),
+      el("td", t.side === "BUY" ? "up" : "down", t.side),
+      el("td", "", t.ticker),
+      el("td", "num", t.shares == null ? "–" : String(t.shares)),
+      el("td", "num", t.price_gbp == null ? "–" : GBP(t.price_gbp)),
+      el("td", "num", GBP0(t.value_gbp)),
+      el("td", "num", GBP(t.cost_gbp)),
+      el("td", "", t.reason || ""),
+    );
+    tbl.append(tr);
+  }
+}
+
+async function main() {
+  let d;
+  try {
+    const resp = await fetch("data.json", {cache: "no-store"});
+    if (!resp.ok) throw new Error("HTTP " + resp.status);
+    d = await resp.json();
+  } catch (e) {
+    document.getElementById("asof").textContent = "";
+    document.getElementById("asof").append(
+      el("span", "err", "Could not load data.json — has the daily workflow run since Pages was enabled?"));
+    return;
+  }
+  document.getElementById("asof").textContent =
+    "As of " + d.as_of + " · signals run each weekday after LSE close";
+  document.getElementById("gen").textContent = "Data generated " + d.generated_at + ".";
+  renderTiles(d);
+  renderEquity(d);
+  renderHoldings(d);
+  renderLeaderboard(d);
+  renderTrades(d);
+}
+main();
+</script>
+</body>
+</html>

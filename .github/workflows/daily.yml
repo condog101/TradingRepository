@@ -26,6 +26,8 @@ jobs:
   signal:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    outputs:
+      deploy: ${{ steps.site.outputs.deploy }}
     steps:
       - uses: actions/checkout@v4
 
@@ -60,6 +62,23 @@ jobs:
             git push origin "HEAD:${{ github.ref_name }}"
           fi
 
+      - name: Prepare dashboard site
+        id: site
+        run: |
+          if [ -f site/data.json ]; then
+            mkdir -p _site
+            cp site/index.html site/data.json _site/
+            echo "deploy=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "no data.json (dry run?) — skipping dashboard deploy"
+          fi
+
+      - name: Upload Pages artifact
+        if: steps.site.outputs.deploy == 'true'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
       - name: Alert on failure
         if: failure()
         env:
@@ -67,3 +86,27 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
           python -c "from momo import notify; notify.send('🚨 <b>daily-signals workflow failed</b> — check the Actions log on GitHub')"
+
+  # Publishes the dashboard. continue-on-error because this stays broken (and
+  # harmless) while the repo is private — Pages needs a public repo on the
+  # free plan, and the signal run above must never be blocked by it.
+  deploy-dashboard:
+    needs: signal
+    if: needs.signal.outputs.deploy == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    continue-on-error: true
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Enable Pages if needed
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

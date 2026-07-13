@@ -55,6 +55,30 @@ itself. GitHub disables cron
 on repos with 60 days of no activity — the daily state commit keeps it
 alive, but if you ever pause, re-enable from the Actions tab.
 
+## Dashboard
+
+Every live run also publishes a dashboard to **GitHub Pages**:
+
+**https://condog101.github.io/TradingRepository/**
+
+It shows current positions (value, P&L, rank, days held, distance to stop
+and 200dma, with a 13-month price chart per holding), the equity curve
+rebased against the FTSE 100, drawdown and cost stats, the momentum
+leaderboard (top of the ranking plus wherever your holdings sit), and the
+trade log. Data refreshes with each weekday run; the history charts
+accumulate from deployment day.
+
+One-time setup:
+
+1. **Make the repo public** (Settings → General → Danger Zone → Change
+   visibility). GitHub Pages is not available on private repos on the free
+   plan. ⚠️ **This makes your positions, P&L and trade history visible to
+   anyone with the URL** — and the repo's code and state file too. If that
+   ever becomes uncomfortable, flip the repo back to private; the daily
+   signals keep working (the deploy step just starts skipping, by design).
+2. Run the *daily-signals* workflow once (not dry-run) — the workflow
+   enables Pages itself on first deploy.
+
 ## Daily routine
 
 - **Message says "TRADES TO MAKE"** → place those orders on Interactive

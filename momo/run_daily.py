@@ -15,6 +15,7 @@ from pathlib import Path
 from .config import load_config, is_dry_run
 from . import data as data_mod
 from . import notify
+from . import report
 from . import universe as universe_mod
 from .momentum import momentum_table
 from .portfolio import apply_trades, load_state, save_state
@@ -102,6 +103,27 @@ def main() -> int:
         if dry:
             msg = "🧪 [DRY RUN]\n" + msg
         notify.send(msg)
+
+        # Dashboard data last: the Telegram signal above is already out, so
+        # a failure here alerts + reddens the run without losing the signal.
+        stage = "dashboard"
+        if not dry:
+            benchmark = None
+            try:
+                b_closes, _ = data_mod.fetch_history([cfg.benchmark_ticker], cfg, "5d")
+                benchmark = float(b_closes[cfg.benchmark_ticker].dropna().iloc[-1])
+            except Exception:
+                log.warning("benchmark fetch failed; history row will lack it")
+            hist = report.append_history(
+                Path(cfg.history_file), today, state.equity_gbp(prices),
+                state.cash_gbp, len(state.positions), benchmark,
+            )
+            report.write_site_data(
+                report.build_data(state, table, md.closes_gbp, hist, cfg, today,
+                                  uni.names),
+                Path(cfg.site_data_file),
+            )
+
         log.info("done (dry_run=%s, trades=%d)", dry, len(trades))
         return 0
 

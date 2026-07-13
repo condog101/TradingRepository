@@ -1,8 +1,10 @@
 """Telegram notification: message formatting + delivery.
 
 Credentials come from TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID env vars
-(GitHub Actions secrets). Without them, messages fall back to stdout so
-local dry runs need no setup.
+(GitHub Actions secrets). TELEGRAM_CHAT_ID is optional: if only the token
+is set, the chat id is discovered from getUpdates — which works as long
+as the owner has sent the bot at least one message. Without a token,
+messages fall back to stdout so local dry runs need no setup.
 """
 
 from __future__ import annotations
@@ -21,14 +23,35 @@ from .portfolio import PortfolioState, Trade
 log = logging.getLogger(__name__)
 
 API = "https://api.telegram.org/bot{token}/sendMessage"
+UPDATES_API = "https://api.telegram.org/bot{token}/getUpdates"
+
+
+def discover_chat_id(token: str) -> str | None:
+    """Find the owner's chat id from the bot's pending updates. Works when
+    the owner has messaged the bot at least once (getUpdates only retains
+    recent messages, but a private chat id never changes once seen)."""
+    try:
+        r = requests.get(UPDATES_API.format(token=token), timeout=30)
+        r.raise_for_status()
+        for update in reversed(r.json().get("result", [])):
+            msg = update.get("message") or update.get("edited_message") or {}
+            chat = msg.get("chat", {})
+            if chat.get("type") == "private" and "id" in chat:
+                return str(chat["id"])
+    except requests.RequestException as e:
+        log.warning("chat-id discovery failed: %s", e)
+    return None
 
 
 def send(text: str) -> bool:
     """Send `text` (HTML) to Telegram; returns True on success.
     Falls back to stdout when credentials are absent."""
     token = os.environ.get("TELEGRAM_BOT_TOKEN")
-    chat_id = os.environ.get("TELEGRAM_CHAT_ID")
+    chat_id = os.environ.get("TELEGRAM_CHAT_ID") or (token and discover_chat_id(token))
     if not token or not chat_id:
+        if token and not chat_id:
+            log.warning("no TELEGRAM_CHAT_ID and discovery found no messages — "
+                        "send the bot a message once and re-run")
         print("--- telegram (no credentials, printing) ---")
         print(text)
         return False

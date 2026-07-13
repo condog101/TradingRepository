@@ -41,11 +41,13 @@ multi-market.
 
 1. **Create a Telegram bot**: message [@BotFather](https://t.me/BotFather),
    send `/newbot`, follow the prompts, copy the **bot token**.
-2. **Get your chat id**: send your new bot any message, then open
+2. **Message your bot once** (any text) — the system discovers your chat
+   id automatically from that. (You can also pin it explicitly with an
+   optional `TELEGRAM_CHAT_ID` secret: open
    `https://api.telegram.org/bot<TOKEN>/getUpdates` in a browser and copy
-   `message.chat.id` from the response.
-3. **Add repo secrets**: GitHub → Settings → Secrets and variables →
-   Actions → add `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID`.
+   `message.chat.id`.)
+3. **Add the repo secret**: GitHub → Settings → Secrets and variables →
+   Actions → add `TELEGRAM_BOT_TOKEN`.
 4. **Enable workflows** in the Actions tab if prompted.
 5. **Test it**: Actions → *daily-signals* → Run workflow → tick *dry run*.
    You should get a Telegram message within a few minutes.

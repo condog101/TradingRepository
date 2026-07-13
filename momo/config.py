@@ -51,8 +51,11 @@ class Config:
 
     # --- Cost gating ---
     expected_hold_years: float = 0.25   # amortise round trip over ~3 months
-    swap_safety_factor: float = 2.0     # swap must clear Nx its total cost
-    swap_out_rank: int = 8              # holding only swappable once its rank
+    # Backtested 2022-2026 (see README): swap_out_rank 20 dominated 8 and 40
+    # on CAGR, Sharpe AND drawdown across all safety factors; factor set to
+    # the middle of its (noisy) range rather than the single best cell.
+    swap_safety_factor: float = 3.0     # swap must clear Nx its total cost
+    swap_out_rank: int = 20             # holding only swappable once its rank
                                         # decays past this (>= buy_rank)
 
     # --- Cadence ---

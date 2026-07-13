@@ -119,10 +119,29 @@ python -m backtest.backtest --years 5 --sell-rank 100 --top-n 4   # param sweep
 It replays the exact production decision code (same scoring, hysteresis
 and cost model; signals computed at day t, executed at day t+1's close) and
 prints CAGR, max drawdown, Sharpe, trades/month and total cost drag, plus a
-buy-and-hold benchmark. **Read it with caveats**: the universe is *today's*
-index members (survivorship bias inflates returns), and data is
-Yahoo-adjusted daily closes. Use it to validate turnover, cost behaviour
-and parameter robustness — not to extrapolate returns.
+buy-and-hold benchmark. Tick the *sweep* input to grid the swap-gate
+parameters instead of a single run. **Read it with caveats**: the universe
+is *today's* index members (survivorship bias inflates returns), and data
+is Yahoo-adjusted daily closes. Use it to validate turnover, cost
+behaviour and parameter robustness — not to extrapolate returns.
+
+### Recorded results (Oct 2022 – Jul 2026, 3.8y, survivorship-biased)
+
+The Jul 2026 sweep showed turnover was driven by the weekly swap, not
+rank-decay exits, and that requiring a holding to fall past **rank 20**
+before it can be swapped improved every metric at once. Defaults were set
+accordingly (`swap_out_rank=20`, `swap_safety_factor=3.0`):
+
+| Config | CAGR | Max DD | Sharpe | Trades/mo | Cost drag |
+|---|---|---|---|---|---|
+| Original (swap floor 8, factor 2) | +17.8% | -30.5% | 0.82 | 4.5 | 11.9%/yr |
+| **Adopted (floor 20, factor 3)** | **+25.8%** | **-25.3%** | **1.13** | 3.3 | 9.2%/yr |
+| FTSE 100 buy & hold | +16.2% | — | — | 0 | 0 |
+
+Neighbouring cells (floor 20 with factors 2–4) scored +23.8% to +32.5%,
+so the adopted point sits on a plateau, not a spike. Residual turnover
+(~3/month) comes from 200dma trend exits and re-entries, which is the
+strategy working as designed, not churn.
 
 Run the unit tests any time with `python -m pytest tests/ -q`.
 

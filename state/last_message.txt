@@ -1,10 +1,10 @@
-✅ <b>No trades today — 2026-07-14</b>
+✅ <b>No trades today — 2026-07-15</b>
 
 <b>Portfolio:</b>
-  IGG.L (UK)  54 sh  £952.02  -0.9%  1d  rank #1
-  CWR.L (UK)  214 sh  £903.94  -7.1%  1d  rank #2
-  GLEN.L (UK)  187 sh  £991.47  +1.9%  1d  rank #4
-  PCT.L (UK)  144 sh  £964.08  -1.0%  1d  rank #3
-  TEM.L (UK)  306 sh  £970.02  -0.2%  1d  rank #5
+  IGG.L (UK)  54 sh  £960.66  +0.0%  2d  rank #1
+  CWR.L (UK)  214 sh  £908.64  -6.6%  2d  rank #2
+  GLEN.L (UK)  187 sh  £967.73  -0.6%  2d  rank #4
+  PCT.L (UK)  144 sh  £951.84  -2.3%  2d  rank #3
+  TEM.L (UK)  306 sh  £963.90  -0.8%  2d  rank #5
 
-<b>Equity £4,929.41</b> (-1.4% vs £5,000.00) · cash £147.88
+<b>Equity £4,900.65</b> (-2.0% vs £5,000.00) · cash £147.88

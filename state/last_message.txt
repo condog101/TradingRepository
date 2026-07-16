@@ -1,10 +1,16 @@
-✅ <b>No trades today — 2026-07-15</b>
+📈 <b>TRADES TO MAKE — 2026-07-16</b>
 
-<b>Portfolio:</b>
-  IGG.L (UK)  54 sh  £960.66  +0.0%  2d  rank #1
-  CWR.L (UK)  214 sh  £908.64  -6.6%  2d  rank #2
-  GLEN.L (UK)  187 sh  £967.73  -0.6%  2d  rank #4
-  PCT.L (UK)  144 sh  £951.84  -2.3%  2d  rank #3
-  TEM.L (UK)  306 sh  £963.90  -0.8%  2d  rank #5
+🔴 SELL <b>CWR.L</b> (UK) — 214 shares ≈ £814.48
+     @ ~£3.81/sh · est. costs £6.03
+     <i>trend break: close 3.81 &lt; 98% of 200dma 3.93</i>
 
-<b>Equity £4,900.65</b> (-2.0% vs £5,000.00) · cash £147.88
+Execute manually on Interactive Investor at next opportunity.
+If you don't execute (or fill differs a lot), edit state/portfolio.json.
+
+<b>Portfolio after booking:</b>
+  IGG.L (UK)  54 sh  £957.42  -0.3%  3d  rank #1
+  GLEN.L (UK)  187 sh  £966.23  -0.7%  3d  rank #4
+  PCT.L (UK)  144 sh  £930.24  -4.5%  3d  rank #3
+  TEM.L (UK)  306 sh  £954.72  -1.8%  3d  rank #5
+
+<b>Equity £4,764.95</b> (-4.7% vs £5,000.00) · cash £956.34

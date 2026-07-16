@@ -1,6 +1,6 @@
 {
  "schema_version": 1,
- "cash_gbp": 147.88,
+ "cash_gbp": 956.34,
  "positions": [
   {
    "ticker": "IGG.L",
@@ -10,15 +10,6 @@
    "entry_price_gbp": 17.580000000000002,
    "entry_cost_gbp": 11.1099,
    "entry_value_gbp": 949.32
-  },
-  {
-   "ticker": "CWR.L",
-   "market": "UK",
-   "shares": 214,
-   "entry_date": "2026-07-13",
-   "entry_price_gbp": 4.492000122070313,
-   "entry_cost_gbp": 11.199660195922853,
-   "entry_value_gbp": 961.29
   },
   {
    "ticker": "GLEN.L",
@@ -48,7 +39,7 @@
    "entry_value_gbp": 960.84
   }
  ],
- "last_run": "2026-07-15",
+ "last_run": "2026-07-16",
  "trade_log": [
   {
    "date": "2026-07-13",
@@ -99,6 +90,16 @@
    "value_gbp": 960.84,
    "cost_gbp": 11.2,
    "reason": "entered top 8 (rank 5)"
+  },
+  {
+   "date": "2026-07-16",
+   "side": "SELL",
+   "ticker": "CWR.L",
+   "shares": 214,
+   "price_gbp": 3.806,
+   "value_gbp": 814.48,
+   "cost_gbp": 6.03,
+   "reason": "trend break: close 3.81 < 98% of 200dma 3.93"
   }
  ]
 }

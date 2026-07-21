@@ -1,17 +1,10 @@
-📈 <b>TRADES TO MAKE — 2026-07-20</b>
+✅ <b>No trades today — 2026-07-21</b>
 
-🟢 BUY  <b>BEZ.L</b> (UK) — 64 shares ≈ £824.32
-     @ ~£12.88/sh · est. costs £10.17
-     <i>entered top 8 (rank 2)</i>
+<b>Portfolio:</b>
+  IGG.L (UK)  54 sh  £941.76  -2.0%  8d  rank #5
+  GLEN.L (UK)  187 sh  £987.17  +1.4%  8d  rank #8
+  PCT.L (UK)  144 sh  £941.76  -3.3%  8d  rank #3
+  TEM.L (UK)  306 sh  £954.72  -1.8%  8d  rank #4
+  BEZ.L (UK)  64 sh  £824.00  -1.3%  1d  rank #2
 
-Execute manually on Interactive Investor at next opportunity.
-If you don't execute (or fill differs a lot), edit state/portfolio.json.
-
-<b>Portfolio after booking:</b>
-  IGG.L (UK)  54 sh  £935.82  -2.6%  7d  rank #5
-  GLEN.L (UK)  187 sh  £957.25  -1.7%  7d  rank #7
-  PCT.L (UK)  144 sh  £915.84  -6.0%  7d  rank #3
-  TEM.L (UK)  306 sh  £937.89  -3.6%  7d  rank #4
-  BEZ.L (UK)  64 sh  £824.32  -1.2%  0d  rank #2
-
-<b>Equity £4,692.97</b> (-6.1% vs £5,000.00) · cash £121.85
+<b>Equity £4,771.26</b> (-4.6% vs £5,000.00) · cash £121.85

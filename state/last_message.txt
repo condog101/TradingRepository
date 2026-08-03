@@ -1,10 +1,20 @@
-✅ <b>No trades today — 2026-07-31</b>
+📈 <b>TRADES TO MAKE — 2026-08-03</b>
 
-<b>Portfolio:</b>
-  IGG.L (UK)  54 sh  £788.40  -18.1%  18d  rank #11
-  GLEN.L (UK)  187 sh  £1,015.41  +4.4%  18d  rank #21
-  PCT.L (UK)  144 sh  £902.16  -7.4%  18d  rank #3
-  TEM.L (UK)  306 sh  £933.30  -4.0%  18d  rank #5
-  BEZ.L (UK)  64 sh  £825.92  -1.0%  11d  rank #1
+🔴 SELL <b>IGG.L</b> (UK) — 54 shares ≈ £740.34
+     @ ~£13.71/sh · est. costs £5.84
+     <i>hard stop: 13.71 &lt;= 14.06 (-20% from entry)</i>
+🟢 BUY  <b>KLR.L</b> (UK) — 24 shares ≈ £732.00
+     @ ~£30.50/sh · est. costs £9.48
+     <i>entered top 8 (rank 4)</i>
 
-<b>Equity £4,587.04</b> (-8.3% vs £5,000.00) · cash £121.85
+Execute manually on Interactive Investor at next opportunity.
+If you don't execute (or fill differs a lot), edit state/portfolio.json.
+
+<b>Portfolio after booking:</b>
+  GLEN.L (UK)  187 sh  £1,007.93  +3.6%  21d  rank #21
+  PCT.L (UK)  144 sh  £913.68  -6.3%  21d  rank #3
+  TEM.L (UK)  306 sh  £939.42  -3.4%  21d  rank #6
+  BEZ.L (UK)  64 sh  £827.52  -0.8%  14d  rank #1
+  KLR.L (UK)  24 sh  £732.00  -1.3%  0d  rank #4
+
+<b>Equity £4,535.42</b> (-9.3% vs £5,000.00) · cash £114.87

@@ -1,16 +1,7 @@
 {
  "schema_version": 1,
- "cash_gbp": 121.85,
+ "cash_gbp": 114.87,
  "positions": [
-  {
-   "ticker": "IGG.L",
-   "market": "UK",
-   "shares": 54,
-   "entry_date": "2026-07-13",
-   "entry_price_gbp": 17.580000000000002,
-   "entry_cost_gbp": 11.1099,
-   "entry_value_gbp": 949.32
-  },
   {
    "ticker": "GLEN.L",
    "market": "UK",
@@ -46,9 +37,18 @@
    "entry_price_gbp": 12.88,
    "entry_cost_gbp": 10.1724,
    "entry_value_gbp": 824.32
+  },
+  {
+   "ticker": "KLR.L",
+   "market": "UK",
+   "shares": 24,
+   "entry_date": "2026-08-03",
+   "entry_price_gbp": 30.5,
+   "entry_cost_gbp": 9.48,
+   "entry_value_gbp": 732.0
   }
  ],
- "last_run": "2026-07-31",
+ "last_run": "2026-08-03",
  "trade_log": [
   {
    "date": "2026-07-13",
@@ -119,6 +119,26 @@
    "value_gbp": 824.32,
    "cost_gbp": 10.17,
    "reason": "entered top 8 (rank 2)"
+  },
+  {
+   "date": "2026-08-03",
+   "side": "SELL",
+   "ticker": "IGG.L",
+   "shares": 54,
+   "price_gbp": 13.71,
+   "value_gbp": 740.34,
+   "cost_gbp": 5.84,
+   "reason": "hard stop: 13.71 <= 14.06 (-20% from entry)"
+  },
+  {
+   "date": "2026-08-03",
+   "side": "BUY",
+   "ticker": "KLR.L",
+   "shares": 24,
+   "price_gbp": 30.5,
+   "value_gbp": 732.0,
+   "cost_gbp": 9.48,
+   "reason": "entered top 8 (rank 4)"
   }
  ]
 }

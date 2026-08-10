@@ -1,16 +1,7 @@
 {
  "schema_version": 1,
- "cash_gbp": 114.87,
+ "cash_gbp": 267.2,
  "positions": [
-  {
-   "ticker": "GLEN.L",
-   "market": "UK",
-   "shares": 187,
-   "entry_date": "2026-07-13",
-   "entry_price_gbp": 5.1450000000000005,
-   "entry_cost_gbp": 11.205862500000002,
-   "entry_value_gbp": 962.12
-  },
   {
    "ticker": "PCT.L",
    "market": "UK",
@@ -46,9 +37,18 @@
    "entry_price_gbp": 30.5,
    "entry_cost_gbp": 9.48,
    "entry_value_gbp": 732.0
+  },
+  {
+   "ticker": "CWR.L",
+   "market": "UK",
+   "shares": 212,
+   "entry_date": "2026-08-10",
+   "entry_price_gbp": 4.216000061035157,
+   "entry_cost_gbp": 10.693440097045901,
+   "entry_value_gbp": 893.79
   }
  ],
- "last_run": "2026-08-07",
+ "last_run": "2026-08-10",
  "trade_log": [
   {
    "date": "2026-07-13",
@@ -139,6 +139,26 @@
    "value_gbp": 732.0,
    "cost_gbp": 9.48,
    "reason": "entered top 8 (rank 4)"
+  },
+  {
+   "date": "2026-08-10",
+   "side": "SELL",
+   "ticker": "GLEN.L",
+   "shares": 187,
+   "price_gbp": 5.687,
+   "value_gbp": 1063.47,
+   "cost_gbp": 6.65,
+   "reason": "swapped out: rank 26, edge 258%/yr clears cost gate"
+  },
+  {
+   "date": "2026-08-10",
+   "side": "BUY",
+   "ticker": "CWR.L",
+   "shares": 212,
+   "price_gbp": 4.216,
+   "value_gbp": 893.79,
+   "cost_gbp": 10.69,
+   "reason": "entered top 8 (rank 3)"
   }
  ]
 }

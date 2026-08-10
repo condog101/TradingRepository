@@ -1,10 +1,20 @@
-✅ <b>No trades today — 2026-08-07</b>
+📈 <b>TRADES TO MAKE — 2026-08-10</b>
 
-<b>Portfolio:</b>
-  GLEN.L (UK)  187 sh  £1,041.59  +7.1%  25d  rank #18
-  PCT.L (UK)  144 sh  £956.16  -1.8%  25d  rank #4
-  TEM.L (UK)  306 sh  £954.72  -1.8%  25d  rank #6
-  BEZ.L (UK)  64 sh  £825.92  -1.0%  18d  rank #1
-  KLR.L (UK)  24 sh  £738.24  -0.4%  4d  rank #2
+🔴 SELL <b>GLEN.L</b> (UK) — 187 shares ≈ £1,063.47
+     @ ~£5.69/sh · est. costs £6.65
+     <i>swapped out: rank 26, edge 258%/yr clears cost gate</i>
+🟢 BUY  <b>CWR.L</b> (UK) — 212 shares ≈ £893.79
+     @ ~£4.22/sh · est. costs £10.69
+     <i>entered top 8 (rank 3)</i>
 
-<b>Equity £4,631.50</b> (-7.4% vs £5,000.00) · cash £114.87
+Execute manually on Interactive Investor at next opportunity.
+If you don't execute (or fill differs a lot), edit state/portfolio.json.
+
+<b>Portfolio after booking:</b>
+  PCT.L (UK)  144 sh  £950.40  -2.4%  28d  rank #4
+  TEM.L (UK)  306 sh  £951.66  -2.1%  28d  rank #9
+  BEZ.L (UK)  64 sh  £827.20  -0.9%  21d  rank #1
+  KLR.L (UK)  24 sh  £734.40  -1.0%  7d  rank #2
+  CWR.L (UK)  212 sh  £893.79  -1.2%  0d  rank #3
+
+<b>Equity £4,624.66</b> (-7.5% vs £5,000.00) · cash £267.20

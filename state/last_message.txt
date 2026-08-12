@@ -1,10 +1,10 @@
-✅ <b>No trades today — 2026-08-11</b>
+✅ <b>No trades today — 2026-08-12</b>
 
 <b>Portfolio:</b>
-  PCT.L (UK)  144 sh  £955.44  -1.9%  29d  rank #7
-  TEM.L (UK)  306 sh  £960.84  -1.2%  29d  rank #11
-  BEZ.L (UK)  64 sh  £827.52  -0.8%  22d  rank #1
-  KLR.L (UK)  24 sh  £731.52  -1.4%  8d  rank #2
-  CWR.L (UK)  212 sh  £920.08  +1.7%  1d  rank #4
+  PCT.L (UK)  144 sh  £974.88  +0.1%  30d  rank #6
+  TEM.L (UK)  306 sh  £974.61  +0.3%  30d  rank #11
+  BEZ.L (UK)  64 sh  £827.20  -0.9%  23d  rank #1
+  KLR.L (UK)  24 sh  £749.28  +1.1%  9d  rank #2
+  CWR.L (UK)  212 sh  £1,028.20  +13.8%  2d  rank #8
 
-<b>Equity £4,662.60</b> (-6.7% vs £5,000.00) · cash £267.20
+<b>Equity £4,821.37</b> (-3.6% vs £5,000.00) · cash £267.20

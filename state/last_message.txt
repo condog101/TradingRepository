@@ -1,9 +1,17 @@
-✅ <b>No trades today — 2026-08-21</b>
+📈 <b>TRADES TO MAKE — 2026-08-24</b>
 
-<b>Portfolio:</b>
-  PCT.L (UK)  144 sh  £920.88  -5.5%  39d  rank #8
-  TEM.L (UK)  306 sh  £980.73  +0.9%  39d  rank #14
-  BEZ.L (UK)  64 sh  £829.44  -0.6%  32d  rank #4
-  KLR.L (UK)  24 sh  £692.16  -6.7%  18d  rank #2
+🟢 BUY  <b>SDR.L</b> (UK) — 148 shares ≈ £863.58
+     @ ~£5.83/sh · est. costs £10.47
+     <i>entered top 8 (rank 1)</i>
 
-<b>Equity £4,533.99</b> (-9.3% vs £5,000.00) · cash £1,110.78
+Execute manually on Interactive Investor at next opportunity.
+If you don't execute (or fill differs a lot), edit state/portfolio.json.
+
+<b>Portfolio after booking:</b>
+  PCT.L (UK)  144 sh  £897.84  -7.9%  42d  rank #10
+  TEM.L (UK)  306 sh  £962.37  -1.0%  42d  rank #17
+  BEZ.L (UK)  64 sh  £829.44  -0.6%  35d  rank #5
+  KLR.L (UK)  24 sh  £685.92  -7.6%  21d  rank #2
+  SDR.L (UK)  148 sh  £863.58  -1.2%  0d  rank #1
+
+<b>Equity £4,475.88</b> (-10.5% vs £5,000.00) · cash £236.73

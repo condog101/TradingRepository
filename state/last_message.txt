@@ -1,10 +1,11 @@
-✅ <b>No trades today — 2026-08-31</b>
+✅ <b>No trades today — 2026-09-01</b>
 
 <b>Portfolio:</b>
-  PCT.L (UK)  144 sh  £944.64  -3.0%  49d  rank #12
-  TEM.L (UK)  306 sh  £986.85  +1.5%  49d  rank #23
-  BEZ.L (UK)  64 sh  £830.08  -0.5%  42d  rank #3
-  KLR.L (UK)  24 sh  £724.80  -2.3%  28d  rank #2
-  SDR.L (UK)  148 sh  £864.32  -1.1%  7d  rank #1
+  PCT.L (UK)  144 sh  £915.84  -6.0%  50d  rank #12
+  TEM.L (UK)  306 sh  £991.44  +2.0%  50d  rank #23
+  BEZ.L (UK)  64 sh  £832.00  -0.3%  43d  rank #3
+  KLR.L (UK)  24 sh  £727.20  -2.0%  29d  rank #2
+  SDR.L (UK)  148 sh  £864.32  -1.1%  8d  rank #1
 
-<b>Equity £4,587.42</b> (-8.3% vs £5,000.00) · cash £236.73
+<b>Equity £4,567.53</b> (-8.6% vs £5,000.00) · cash £236.73
+⚠️ 1 tickers have no data: CURY.L

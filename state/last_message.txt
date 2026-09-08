@@ -1,20 +1,10 @@
-📈 <b>TRADES TO MAKE — 2026-09-07</b>
+✅ <b>No trades today — 2026-09-08</b>
 
-🔴 SELL <b>TEM.L</b> (UK) — 306 shares ≈ £1,009.80
-     @ ~£3.30/sh · est. costs £6.51
-     <i>swapped out: rank 24, edge 237%/yr clears cost gate</i>
-🟢 BUY  <b>CMCX.L</b> (UK) — 113 shares ≈ £887.05
-     @ ~£7.85/sh · est. costs £10.64
-     <i>entered top 8 (rank 2)</i>
+<b>Portfolio:</b>
+  PCT.L (UK)  144 sh  £951.12  -2.4%  57d  rank #10
+  BEZ.L (UK)  64 sh  £831.36  -0.4%  50d  rank #19
+  KLR.L (UK)  24 sh  £712.32  -4.0%  36d  rank #3
+  SDR.L (UK)  148 sh  £866.54  -0.9%  15d  rank #1
+  CMCX.L (UK)  113 sh  £855.41  -4.8%  1d  rank #2
 
-Execute manually on Interactive Investor at next opportunity.
-If you don't execute (or fill differs a lot), edit state/portfolio.json.
-
-<b>Portfolio after booking:</b>
-  PCT.L (UK)  144 sh  £943.92  -3.1%  56d  rank #9
-  BEZ.L (UK)  64 sh  £831.36  -0.4%  49d  rank #22
-  KLR.L (UK)  24 sh  £729.12  -1.7%  35d  rank #4
-  SDR.L (UK)  148 sh  £865.80  -1.0%  14d  rank #1
-  CMCX.L (UK)  113 sh  £887.05  -1.2%  0d  rank #2
-
-<b>Equity £4,599.57</b> (-8.0% vs £5,000.00) · cash £342.32
+<b>Equity £4,559.07</b> (-8.8% vs £5,000.00) · cash £342.32

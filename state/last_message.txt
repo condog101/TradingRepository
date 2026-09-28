@@ -1,10 +1,10 @@
-✅ <b>No trades today — 2026-09-25</b>
+✅ <b>No trades today — 2026-09-28</b>
 
 <b>Portfolio:</b>
-  PCT.L (UK)  144 sh  £1,006.56  +3.4%  74d  rank #25
-  BEZ.L (UK)  64 sh  £835.84  +0.2%  67d  rank #4
-  KLR.L (UK)  24 sh  £793.44  +7.1%  53d  rank #5
-  SDR.L (UK)  148 sh  £870.98  -0.4%  32d  rank #15
-  CMCX.L (UK)  113 sh  £765.01  -15.0%  18d  rank –
+  PCT.L (UK)  144 sh  £984.96  +1.2%  77d  rank #18
+  BEZ.L (UK)  64 sh  £836.48  +0.2%  70d  rank #4
+  KLR.L (UK)  24 sh  £825.12  +11.4%  56d  rank #5
+  SDR.L (UK)  148 sh  £870.98  -0.4%  35d  rank #11
+  CMCX.L (UK)  113 sh  £749.19  -16.7%  21d  rank –
 
-<b>Equity £4,614.15</b> (-7.7% vs £5,000.00) · cash £342.32
+<b>Equity £4,609.05</b> (-7.8% vs £5,000.00) · cash £342.32

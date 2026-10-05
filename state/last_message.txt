@@ -1,10 +1,20 @@
-✅ <b>No trades today — 2026-10-02</b>
+📈 <b>TRADES TO MAKE — 2026-10-05</b>
 
-<b>Portfolio:</b>
-  PCT.L (UK)  144 sh  £1,024.56  +5.3%  81d  rank #25
-  BEZ.L (UK)  64 sh  £837.44  +0.4%  74d  rank #3
-  KLR.L (UK)  24 sh  £798.72  +7.8%  60d  rank #5
-  SDR.L (UK)  148 sh  £871.72  -0.3%  39d  rank #7
-  CMCX.L (UK)  113 sh  £714.16  -20.7%  25d  rank –
+🔴 SELL <b>CMCX.L</b> (UK) — 113 shares ≈ £714.16
+     @ ~£6.32/sh · est. costs £5.78
+     <i>lost data-quality/liquidity eligibility</i>
+🟢 BUY  <b>CCC.L</b> (UK) — 16 shares ≈ £864.80
+     @ ~£54.05/sh · est. costs £10.48
+     <i>entered top 8 (rank 1)</i>
 
-<b>Equity £4,588.92</b> (-8.2% vs £5,000.00) · cash £342.32
+Execute manually on Interactive Investor at next opportunity.
+If you don't execute (or fill differs a lot), edit state/portfolio.json.
+
+<b>Portfolio after booking:</b>
+  PCT.L (UK)  144 sh  £1,024.56  +5.3%  84d  rank #19
+  BEZ.L (UK)  64 sh  £837.44  +0.4%  77d  rank #3
+  KLR.L (UK)  24 sh  £798.72  +7.8%  63d  rank #5
+  SDR.L (UK)  148 sh  £871.72  -0.3%  42d  rank #7
+  CCC.L (UK)  16 sh  £864.80  -1.2%  0d  rank #1
+
+<b>Equity £4,572.67</b> (-8.5% vs £5,000.00) · cash £175.43

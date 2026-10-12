@@ -1,10 +1,26 @@
-✅ <b>No trades today — 2026-10-09</b>
+📈 <b>TRADES TO MAKE — 2026-10-12</b>
 
-<b>Portfolio:</b>
-  PCT.L (UK)  144 sh  £1,010.88  +3.8%  88d  rank #19
-  BEZ.L (UK)  64 sh  £837.44  +0.4%  81d  rank #3
-  KLR.L (UK)  24 sh  £783.36  +5.7%  67d  rank #8
-  SDR.L (UK)  148 sh  £871.72  -0.3%  46d  rank #13
-  CCC.L (UK)  16 sh  £888.00  +1.5%  4d  rank #1
+🔴 SELL <b>BEZ.L</b> (UK) — 64 shares ≈ £837.44
+     @ ~£13.09/sh · est. costs £6.08
+     <i>lost data-quality/liquidity eligibility</i>
+🔴 SELL <b>SDR.L</b> (UK) — 148 shares ≈ £871.72
+     @ ~£5.89/sh · est. costs £6.17
+     <i>lost data-quality/liquidity eligibility</i>
+🟢 BUY  <b>GROW.L</b> (UK) — 128 shares ≈ £879.36
+     @ ~£6.87/sh · est. costs £10.59
+     <i>entered top 8 (rank 2)</i>
+🟢 BUY  <b>EZJ.L</b> (UK) — 126 shares ≈ £856.80
+     @ ~£6.80/sh · est. costs £10.42
+     <i>entered top 8 (rank 3)</i>
 
-<b>Equity £4,566.83</b> (-8.7% vs £5,000.00) · cash £175.43
+Execute manually on Interactive Investor at next opportunity.
+If you don't execute (or fill differs a lot), edit state/portfolio.json.
+
+<b>Portfolio after booking:</b>
+  PCT.L (UK)  144 sh  £1,010.88  +3.8%  91d  rank #17
+  KLR.L (UK)  24 sh  £783.36  +5.7%  70d  rank #7
+  CCC.L (UK)  16 sh  £888.00  +1.5%  7d  rank #1
+  GROW.L (UK)  128 sh  £879.36  -1.2%  0d  rank #2
+  EZJ.L (UK)  126 sh  £856.80  -1.2%  0d  rank #3
+
+<b>Equity £4,533.58</b> (-9.3% vs £5,000.00) · cash £115.18

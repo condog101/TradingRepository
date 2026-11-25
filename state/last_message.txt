@@ -1,10 +1,10 @@
-✅ <b>No trades today — 2026-11-24</b>
+✅ <b>No trades today — 2026-11-25</b>
 
 <b>Portfolio:</b>
-  KLR.L (UK)  24 sh  £674.88  -9.1%  113d  rank #7
-  CCC.L (UK)  16 sh  £718.72  -18.1%  50d  rank #23
-  GROW.L (UK)  128 sh  £782.72  -12.2%  43d  rank –
-  EZJ.L (UK)  126 sh  £866.88  -0.0%  43d  rank #2
-  ITRK.L (UK)  13 sh  £771.55  -0.8%  36d  rank #4
+  KLR.L (UK)  24 sh  £683.04  -8.0%  114d  rank #7
+  CCC.L (UK)  16 sh  £749.76  -14.5%  51d  rank #9
+  GROW.L (UK)  128 sh  £812.16  -8.8%  44d  rank –
+  EZJ.L (UK)  126 sh  £867.38  +0.0%  44d  rank #2
+  ITRK.L (UK)  13 sh  £772.85  -0.7%  37d  rank #3
 
-<b>Equity £4,062.87</b> (-18.7% vs £5,000.00) · cash £248.12
+<b>Equity £4,133.31</b> (-17.3% vs £5,000.00) · cash £248.12

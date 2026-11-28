@@ -1,18 +1,8 @@
-📈 <b>TRADES TO MAKE — 2026-11-27</b>
+✅ <b>No trades today — 2026-11-28</b>
 
-🔴 SELL <b>CCC.L</b> (UK) — 16 shares ≈ £670.40
-     @ ~£41.90/sh · est. costs £5.67
-     <i>hard stop: 41.90 &lt;= 43.24 (-20% from entry)</i>
-🔴 SELL <b>GROW.L</b> (UK) — 128 shares ≈ £740.48
-     @ ~£5.79/sh · est. costs £5.84
-     <i>trend break: close 5.79 &lt; 98% of 200dma 5.94</i>
+<b>Portfolio:</b>
+  KLR.L (UK)  24 sh  £661.92  -10.9%  117d  rank #7
+  EZJ.L (UK)  126 sh  £870.66  +0.4%  47d  rank #1
+  ITRK.L (UK)  13 sh  £767.00  -1.4%  40d  rank #5
 
-Execute manually on Interactive Investor at next opportunity.
-If you don't execute (or fill differs a lot), edit state/portfolio.json.
-
-<b>Portfolio after booking:</b>
-  KLR.L (UK)  24 sh  £652.32  -12.2%  116d  rank #8
-  EZJ.L (UK)  126 sh  £868.14  +0.1%  46d  rank #1
-  ITRK.L (UK)  13 sh  £767.65  -1.4%  39d  rank #5
-
-<b>Equity £3,935.60</b> (-21.3% vs £5,000.00) · cash £1,647.49
+<b>Equity £3,947.07</b> (-21.1% vs £5,000.00) · cash £1,647.49
